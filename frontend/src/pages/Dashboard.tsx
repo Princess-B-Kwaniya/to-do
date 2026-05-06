@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getProtected, getErrorMessage } from '../services/api'
 import Spinner from '../components/Spinner'
@@ -9,13 +9,45 @@ interface Task {
   done: boolean
 }
 
+// Load initial tasks from localStorage (user-specific key)
+const loadInitialTasks = (): Task[] => {
+  const username = localStorage.getItem('username')
+  if (!username) return []
+  
+  const key = `tasks-${username}`
+  const stored = localStorage.getItem(key)
+  if (stored) {
+    try {
+      return JSON.parse(stored)
+    } catch (e) {
+      console.error('Failed to parse tasks from localStorage')
+      return []
+    }
+  }
+  return []
+}
+
 export default function Dashboard() {
-  const [message, setMessage]   = useState('')
-  const [loading, setLoading]   = useState(true)
-  const [error, setError]       = useState('')
-  const [tasks, setTasks]       = useState<Task[]>([])
+  const [message, setMessage]     = useState('')
+  const [loading, setLoading]     = useState(true)
+  const [error, setError]         = useState('')
+  const [tasks, setTasks]         = useState<Task[]>(loadInitialTasks)
   const [taskInput, setTaskInput] = useState('')
+  const isFirstRender = useRef(true)
   const navigate = useNavigate()
+
+  // Save tasks to localStorage whenever they change (but skip first render)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+    const username = localStorage.getItem('username')
+    if (username) {
+      const key = `tasks-${username}`
+      localStorage.setItem(key, JSON.stringify(tasks))
+    }
+  }, [tasks])
 
   useEffect(() => {
     getProtected()
@@ -26,6 +58,7 @@ export default function Dashboard() {
 
   function handleLogout() {
     localStorage.removeItem('token')
+    localStorage.removeItem('username')
     navigate('/login')
   }
 
@@ -50,7 +83,6 @@ export default function Dashboard() {
     <div className="page">
       <div className="card">
 
-        {/* ── Header ── */}
         <div className="dashboard-header">
           <span className="badge">Authenticated</span>
           <button className="btn-logout" onClick={handleLogout}>Log out</button>
@@ -64,7 +96,6 @@ export default function Dashboard() {
           <p className="welcome-msg">{message}</p>
         )}
 
-        {/* ── To-Do ── */}
         <div className="todo-section">
           <h2>My Tasks</h2>
 

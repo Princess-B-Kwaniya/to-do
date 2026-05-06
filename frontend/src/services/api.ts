@@ -40,10 +40,12 @@ export function getErrorMessage(err: unknown): string {
 
 export async function register(username: string, password: string): Promise<void> {
   await api.post<{ message: string }>('/register', { username, password })
+  localStorage.setItem('username', username)
 }
 
 export async function login(username: string, password: string): Promise<string> {
   const { data } = await api.post<{ token: string }>('/login', { username, password })
+  localStorage.setItem('username', username)
   return data.token
 }
 

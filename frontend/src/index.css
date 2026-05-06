@@ -6,7 +6,7 @@
 
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: #f0f2f5;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
   color: #111;
 }
@@ -22,11 +22,12 @@ body {
 
 .card {
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   padding: 40px 36px;
   width: 100%;
   max-width: 420px;
+  backdrop-filter: blur(10px);
 }
 
 @media (max-width: 480px) {
@@ -71,8 +72,8 @@ input[type='password'] {
 
 input[type='text']:focus,
 input[type='password']:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 /* ── Buttons ────────────────────────────────────────────────────────── */
@@ -83,19 +84,21 @@ input[type='password']:focus {
   gap: 8px;
   width: 100%;
   padding: 11px;
-  background: #2563eb;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: transform 0.2s, box-shadow 0.2s;
   margin-top: 4px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
 }
 
 .btn-primary:disabled {
@@ -151,7 +154,7 @@ input[type='password']:focus {
 }
 
 .switch a {
-  color: #2563eb;
+  color: #667eea;
   font-weight: 600;
   text-decoration: none;
 }
@@ -182,8 +185,8 @@ input[type='password']:focus {
 .spinner-page .spinner {
   width: 36px;
   height: 36px;
-  border-color: rgba(37, 99, 235, 0.25);
-  border-top-color: #2563eb;
+  border-color: rgba(102, 126, 234, 0.25);
+  border-top-color: #667eea;
 }
 
 @keyframes spin {
@@ -195,15 +198,16 @@ input[type='password']:focus {
 /* ── Protected page ─────────────────────────────────────────────────── */
 .badge {
   display: inline-block;
-  background: #dcfce7;
-  color: #16a34a;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
   font-size: 0.72rem;
   font-weight: 700;
-  padding: 3px 10px;
+  padding: 6px 12px;
   border-radius: 999px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
 
 .welcome-msg {
@@ -243,19 +247,26 @@ input[type='password']:focus {
 }
 
 .btn-logout {
-  background: none;
-  border: 1px solid #ddd;
+  background: #ef4444;
+  border: none;
   border-radius: 6px;
-  padding: 4px 12px;
-  font-size: 0.85rem;
-  color: #666;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
   cursor: pointer;
-  transition: border-color 0.15s, color 0.15s;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
 }
 
 .btn-logout:hover {
-  border-color: #ef4444;
-  color: #ef4444;
+  background: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+.btn-logout:active {
+  transform: translateY(0);
 }
 
 /* ── To-Do section ──────────────────────────────────────────────────── */
@@ -288,12 +299,13 @@ input[type='password']:focus {
 }
 
 .todo-form input:focus {
-  border-color: #2563eb;
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
 }
 
 .btn-add {
   padding: 8px 16px;
-  background: #2563eb;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
   border-radius: 6px;
@@ -301,10 +313,13 @@ input[type='password']:focus {
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
 
 .btn-add:hover {
-  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
 .todo-empty {
@@ -345,8 +360,9 @@ input[type='password']:focus {
   font-size: 0.85rem;
   padding: 2px 4px;
   line-height: 1;
+  transition: color 0.2s;
 }
 
 .btn-delete:hover {
-  color: #ef4444;
+  color: #764ba2;
 }
